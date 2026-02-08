@@ -35,4 +35,24 @@ class AskFirst::ConfigurationTest < Minitest::Test
     assert_equal %w[_ga _gid], cat.cookies
     assert_equal false, cat.required
   end
+
+  def test_registers_required_category
+    @config.category(:necessary) do |c|
+      c.title = "Strictly Necessary"
+      c.required = true
+    end
+
+    assert_equal true, @config.categories[:necessary].required
+  end
+
+  def test_module_level_configure
+    AskFirst.reset_configuration!
+    AskFirst.configure do |config|
+      config.cookie_name = "custom_consent"
+    end
+
+    assert_equal "custom_consent", AskFirst.configuration.cookie_name
+  ensure
+    AskFirst.reset_configuration!
+  end
 end
