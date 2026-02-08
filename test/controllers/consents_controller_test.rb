@@ -30,4 +30,16 @@ class AskFirst::ConsentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal({ "analytics" => true, "marketing" => false }, record.categories)
     assert_equal "1.0", record.policy_version
   end
+
+  def test_post_returns_unprocessable_entity_without_visitor_id
+    assert_no_difference "AskFirst::ConsentRecord.count" do
+      post "/askfirst/consents", params: {
+        consent: {
+          categories: { analytics: true }
+        }
+      }, as: :json
+    end
+
+    assert_response :unprocessable_entity
+  end
 end
