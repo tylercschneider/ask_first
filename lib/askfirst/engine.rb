@@ -5,6 +5,12 @@ module AskFirst
   class Engine < ::Rails::Engine
     isolate_namespace AskFirst
 
+    initializer "askfirst.inflections", before: :set_autoload_paths do
+      ActiveSupport::Inflector.inflections do |inflect|
+        inflect.acronym "AskFirst"
+      end
+    end
+
     initializer "askfirst.middleware" do |app|
       app.middleware.insert_before ActionDispatch::Cookies, AskFirst::Middleware
     end
