@@ -1,3 +1,5 @@
+require "erb"
+
 module AskFirst
   module ControllerHelpers
     TURBO_NATIVE_PATTERN = /Turbo Native/i
@@ -8,14 +10,14 @@ module AskFirst
     end
 
     def cookie_consent_tag
-      return "" if turbo_native_request?
+      return "".html_safe if turbo_native_request?
 
       config = AskFirst.configuration
       config_json = consent_config_json(config)
 
-      %(<div data-controller="askfirst--consent" ) +
+      (%(<div data-controller="askfirst--consent" ) +
         %(data-askfirst--consent-config-value="#{ERB::Util.html_escape(config_json)}" ) +
-        %(data-askfirst--consent-endpoint-value="/askfirst/consents"></div>)
+        %(data-askfirst--consent-endpoint-value="/askfirst/consents"></div>)).html_safe
     end
 
     private
