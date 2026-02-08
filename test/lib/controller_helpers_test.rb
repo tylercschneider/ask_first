@@ -43,6 +43,7 @@ class AskFirst::ControllerHelpersTest < Minitest::Test
     html = controller.cookie_consent_tag
     assert_includes html, "askfirst--consent"
     assert_includes html, "data-controller"
+    assert html.html_safe?, "cookie_consent_tag output must be html_safe"
   ensure
     AskFirst.reset_configuration!
   end
