@@ -1,11 +1,23 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
-require "active_record"
+ENV["RAILS_ENV"] = "test"
+ENV["DATABASE_URL"] = "sqlite3::memory:"
 
-ActiveRecord::Base.establish_connection(
-  adapter: "sqlite3",
-  database: ":memory:"
-)
+require "rails"
+require "active_record/railtie"
+require "action_controller/railtie"
+
+require "askfirst"
+
+# Minimal Rails application for testing
+class TestApp < Rails::Application
+  config.eager_load = false
+  config.active_support.deprecation = :stderr
+  config.secret_key_base = "test-secret-key-base-for-askfirst-gem"
+  config.hosts.clear
+end
+
+Rails.application.initialize!
 
 ActiveRecord::Schema.define do
   create_table :askfirst_consent_records, force: true do |t|
@@ -20,7 +32,6 @@ ActiveRecord::Schema.define do
 end
 
 require "minitest/autorun"
-require "askfirst"
 
-# Require app models (not autoloaded outside Rails)
+# Require app code (not autoloaded outside full Rails)
 require_relative "../app/models/askfirst/consent_record"
