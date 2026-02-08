@@ -21,4 +21,18 @@ class AskFirst::ConfigurationTest < Minitest::Test
   def test_has_default_log_consents
     assert_equal true, @config.log_consents
   end
+
+  def test_registers_a_category
+    @config.category(:analytics) do |c|
+      c.title = "Analytics"
+      c.description = "Help us understand usage."
+      c.cookies = %w[_ga _gid]
+    end
+
+    cat = @config.categories[:analytics]
+    assert_equal "Analytics", cat.title
+    assert_equal "Help us understand usage.", cat.description
+    assert_equal %w[_ga _gid], cat.cookies
+    assert_equal false, cat.required
+  end
 end
