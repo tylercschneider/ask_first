@@ -15,6 +15,19 @@ module AskFirst
       migration_template "create_consent_records.rb", "db/migrate/create_askfirst_consent_records.rb"
     end
 
+    def pin_javascript
+      return unless importmap?
+
+      run "bin/importmap pin vanilla-cookieconsent"
+    end
+
+    def copy_stimulus_controller
+      copy_file(
+        File.expand_path("../../../../app/javascript/askfirst/consent_controller.js", __dir__),
+        "app/javascript/controllers/askfirst/consent_controller.js"
+      )
+    end
+
     def print_instructions
       say ""
       say "AskFirst installed! Next steps:", :green
@@ -24,6 +37,12 @@ module AskFirst
       say "  3. Add to your layout:"
       say "       <%= cookie_consent_tag %>"
       say ""
+    end
+
+    private
+
+    def importmap?
+      File.exist?(Rails.root.join("config/importmap.rb"))
     end
   end
 end

@@ -28,4 +28,13 @@ class AskFirst::InstallGeneratorTest < Rails::Generators::TestCase
       assert_match(/categories/, content)
     end
   end
+
+  def test_copies_stimulus_controller
+    run_generator
+
+    assert_file "app/javascript/controllers/askfirst/consent_controller.js" do |content|
+      assert_match(/import.*Controller.*from.*@hotwired\/stimulus/, content)
+      assert_match(/vanilla-cookieconsent/, content)
+    end
+  end
 end
