@@ -4,5 +4,9 @@ module AskFirst
 
     validates :visitor_id, presence: true
     validates :categories, presence: true
+
+    scope :latest_for, ->(visitor_id) {
+      where(visitor_id: visitor_id).order(created_at: :desc).first
+    }
   end
 end
