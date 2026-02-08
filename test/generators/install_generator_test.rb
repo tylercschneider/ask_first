@@ -18,4 +18,14 @@ class AskFirst::InstallGeneratorTest < Rails::Generators::TestCase
       assert_match(/cookie_name/, content)
     end
   end
+
+  def test_creates_migration
+    run_generator
+
+    assert_migration "db/migrate/create_askfirst_consent_records.rb" do |content|
+      assert_match(/create_table :askfirst_consent_records/, content)
+      assert_match(/visitor_id/, content)
+      assert_match(/categories/, content)
+    end
+  end
 end
