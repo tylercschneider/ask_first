@@ -1,6 +1,6 @@
 require "test_helper"
 require "rails/generators/test_case"
-require "generators/askfirst/install/install_generator"
+require "generators/ask_first/install/install_generator"
 
 class AskFirst::InstallGeneratorTest < Rails::Generators::TestCase
   tests AskFirst::InstallGenerator
