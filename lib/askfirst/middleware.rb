@@ -12,7 +12,9 @@ module AskFirst
       cookie_name = AskFirst.configuration.cookie_name
       raw = cookies[cookie_name]
 
-      env["askfirst.consent"] = raw ? parse_consent(raw) : {}
+      consent = raw ? parse_consent(raw) : {}
+      consent = apply_gpc(consent) if env["HTTP_SEC_GPC"] == "1"
+      env["askfirst.consent"] = consent
 
       @app.call(env)
     end
@@ -23,6 +25,17 @@ module AskFirst
       JSON.parse(raw)
     rescue JSON::ParserError
       {}
+    end
+
+    def apply_gpc(consent)
+      required_keys = AskFirst.configuration.categories
+        .select { |_name, cat| cat.required }
+        .keys
+        .map(&:to_s)
+
+      consent.each_with_object({}) do |(key, value), result|
+        result[key] = required_keys.include?(key) ? value : false
+      end
     end
   end
 end
