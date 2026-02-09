@@ -1,6 +1,6 @@
-require "askfirst/version"
-require "askfirst/configuration"
-require "askfirst/engine" if defined?(Rails::Engine)
+require "ask_first/version"
+require "ask_first/configuration"
+require "ask_first/engine" if defined?(Rails::Engine)
 
 module AskFirst
   class << self

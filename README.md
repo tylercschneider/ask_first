@@ -5,10 +5,10 @@ Cookie consent management for Rails. A Rails engine wrapping [vanilla-cookiecons
 ## Features
 
 - Configurable consent categories (necessary, analytics, marketing, etc.)
-- Rack middleware parses consent cookie and sets `env["askfirst.consent"]`
+- Rack middleware parses consent cookie and sets `env["ask_first.consent"]`
 - `consent_given?(:analytics)` helper for controllers and views
 - `cookie_consent_tag` renders the consent banner via Stimulus + cookieconsent v3
-- `POST /askfirst/consents` logs consent records to the database
+- `POST /ask_first/consents` logs consent records to the database
 - Respects the `Sec-GPC: 1` header (Global Privacy Control)
 - Hotwire Native safe — banner is skipped for Turbo Native requests
 
@@ -23,22 +23,22 @@ Cookie consent management for Rails. A Rails engine wrapping [vanilla-cookiecons
 Add to your Gemfile:
 
 ```ruby
-gem "askfirst", github: "tylercschneider/askfirst"
+gem "ask_first", github: "tylercschneider/ask_first"
 ```
 
 Run the install generator:
 
 ```bash
 bundle install
-rails g askfirst:install
+rails g ask_first:install
 rails db:migrate
 ```
 
 The generator will:
-1. Create `config/initializers/askfirst.rb` with default configuration
+1. Create `config/initializers/ask_first.rb` with default configuration
 2. Create a migration for the `askfirst_consent_records` table
 3. Pin `vanilla-cookieconsent` via importmap
-4. Copy the Stimulus controller to `app/javascript/controllers/askfirst/`
+4. Copy the Stimulus controller to `app/javascript/controllers/ask_first/`
 
 ## Setup
 
@@ -46,7 +46,7 @@ Mount the engine in `config/routes.rb`:
 
 ```ruby
 Rails.application.routes.draw do
-  mount AskFirst::Engine, at: "/askfirst"
+  mount AskFirst::Engine, at: "/ask_first"
   # ...
 end
 ```
@@ -76,7 +76,7 @@ curl -o app/assets/stylesheets/cookieconsent.css \
 
 ## Configuration
 
-Edit `config/initializers/askfirst.rb`:
+Edit `config/initializers/ask_first.rb`:
 
 ```ruby
 AskFirst.configure do |config|
@@ -142,7 +142,7 @@ AskFirst::ConsentRecord.latest_for("visitor-123")
 The `AskFirst::Middleware` runs on every request:
 
 1. Reads the consent cookie (default: `af_consent`)
-2. Parses the JSON into `request.env["askfirst.consent"]`
+2. Parses the JSON into `request.env["ask_first.consent"]`
 3. If the `Sec-GPC: 1` header is present, overrides non-required categories to `false`
 
 This makes `consent_given?` work in any controller or view without additional setup.

@@ -1,5 +1,5 @@
 require "test_helper"
-require "askfirst/configuration"
+require "ask_first/configuration"
 
 class AskFirst::ConfigurationTest < Minitest::Test
   def setup
