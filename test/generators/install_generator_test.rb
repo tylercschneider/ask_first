@@ -13,7 +13,7 @@ class AskFirst::InstallGeneratorTest < Rails::Generators::TestCase
   def test_creates_initializer
     run_generator
 
-    assert_file "config/initializers/askfirst.rb" do |content|
+    assert_file "config/initializers/ask_first.rb" do |content|
       assert_match(/AskFirst\.configure/, content)
       assert_match(/cookie_name/, content)
     end
@@ -32,7 +32,7 @@ class AskFirst::InstallGeneratorTest < Rails::Generators::TestCase
   def test_copies_stimulus_controller
     run_generator
 
-    assert_file "app/javascript/controllers/askfirst/consent_controller.js" do |content|
+    assert_file "app/javascript/controllers/ask_first/consent_controller.js" do |content|
       assert_match(/import.*Controller.*from.*@hotwired\/stimulus/, content)
       assert_match(/vanilla-cookieconsent/, content)
     end

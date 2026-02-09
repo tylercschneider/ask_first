@@ -1,4 +1,4 @@
-require_relative "lib/askfirst/version"
+require_relative "lib/ask_first/version"
 
 Gem::Specification.new do |spec|
   spec.name        = "askfirst"

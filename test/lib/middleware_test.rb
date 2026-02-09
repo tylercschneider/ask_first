@@ -1,11 +1,11 @@
 require "test_helper"
-require "askfirst/middleware"
+require "ask_first/middleware"
 require "rack"
 
 class AskFirst::MiddlewareTest < Minitest::Test
   def setup
     AskFirst.reset_configuration!
-    @app = ->(env) { [200, {}, [env["askfirst.consent"].to_s]] }
+    @app = ->(env) { [200, {}, [env["ask_first.consent"].to_s]] }
   end
 
   def test_parses_consent_cookie_into_env
@@ -16,7 +16,7 @@ class AskFirst::MiddlewareTest < Minitest::Test
     status, _headers, _body = middleware.call(env)
 
     assert_equal 200, status
-    assert_equal({ "analytics" => true, "marketing" => false }, env["askfirst.consent"])
+    assert_equal({ "analytics" => true, "marketing" => false }, env["ask_first.consent"])
   end
 
   def test_returns_empty_hash_when_no_cookie
@@ -25,7 +25,7 @@ class AskFirst::MiddlewareTest < Minitest::Test
     middleware = AskFirst::Middleware.new(@app)
     middleware.call(env)
 
-    assert_equal({}, env["askfirst.consent"])
+    assert_equal({}, env["ask_first.consent"])
   end
 
   def test_gpc_header_overrides_non_required_categories_to_false
@@ -45,7 +45,7 @@ class AskFirst::MiddlewareTest < Minitest::Test
     middleware = AskFirst::Middleware.new(@app)
     middleware.call(env)
 
-    consent = env["askfirst.consent"]
+    consent = env["ask_first.consent"]
     assert_equal true, consent["necessary"]
     assert_equal false, consent["analytics"]
     assert_equal false, consent["marketing"]

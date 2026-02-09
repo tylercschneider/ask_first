@@ -5,7 +5,7 @@ module AskFirst
     TURBO_NATIVE_PATTERN = /Turbo Native/i
 
     def consent_given?(category)
-      consent = request.env["askfirst.consent"] || {}
+      consent = request.env["ask_first.consent"] || {}
       consent[category.to_s] == true
     end
 
@@ -15,9 +15,9 @@ module AskFirst
       config = AskFirst.configuration
       config_json = consent_config_json(config)
 
-      (%(<div data-controller="askfirst--consent" ) +
-        %(data-askfirst--consent-config-value="#{ERB::Util.html_escape(config_json)}" ) +
-        %(data-askfirst--consent-endpoint-value="/askfirst/consents"></div>)).html_safe
+      (%(<div data-controller="ask-first--consent" ) +
+        %(data-ask-first--consent-config-value="#{ERB::Util.html_escape(config_json)}" ) +
+        %(data-ask-first--consent-endpoint-value="/ask_first/consents"></div>)).html_safe
     end
 
     private

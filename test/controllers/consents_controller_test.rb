@@ -1,5 +1,5 @@
 require "test_helper"
-require_relative "../../app/controllers/askfirst/consents_controller"
+require_relative "../../app/controllers/ask_first/consents_controller"
 
 class AskFirst::ConsentsControllerTest < ActionDispatch::IntegrationTest
   def setup
@@ -8,13 +8,13 @@ class AskFirst::ConsentsControllerTest < ActionDispatch::IntegrationTest
 
     # Draw routes for test
     Rails.application.routes.draw do
-      mount AskFirst::Engine, at: "/askfirst"
+      mount AskFirst::Engine, at: "/ask_first"
     end
   end
 
   def test_post_creates_consent_record
     assert_difference "AskFirst::ConsentRecord.count", 1 do
-      post "/askfirst/consents", params: {
+      post "/ask_first/consents", params: {
         consent: {
           visitor_id: "visitor-abc",
           categories: { analytics: true, marketing: false },
@@ -33,7 +33,7 @@ class AskFirst::ConsentsControllerTest < ActionDispatch::IntegrationTest
 
   def test_post_returns_unprocessable_entity_without_visitor_id
     assert_no_difference "AskFirst::ConsentRecord.count" do
-      post "/askfirst/consents", params: {
+      post "/ask_first/consents", params: {
         consent: {
           categories: { analytics: true }
         }

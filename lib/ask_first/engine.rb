@@ -1,15 +1,15 @@
-require "askfirst/middleware"
-require "askfirst/controller_helpers"
+require "ask_first/middleware"
+require "ask_first/controller_helpers"
 
 module AskFirst
   class Engine < ::Rails::Engine
     isolate_namespace AskFirst
 
-    initializer "askfirst.middleware" do |app|
+    initializer "ask_first.middleware" do |app|
       app.middleware.insert_before ActionDispatch::Cookies, AskFirst::Middleware
     end
 
-    initializer "askfirst.helpers" do
+    initializer "ask_first.helpers" do
       ActiveSupport.on_load(:action_controller_base) do
         include AskFirst::ControllerHelpers
       end

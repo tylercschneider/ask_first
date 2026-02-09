@@ -7,7 +7,7 @@ require "rails"
 require "active_record/railtie"
 require "action_controller/railtie"
 
-require "askfirst"
+require "ask_first"
 
 # Minimal Rails application for testing
 class TestApp < Rails::Application
@@ -34,4 +34,4 @@ end
 require "minitest/autorun"
 
 # Require app code (not autoloaded outside full Rails)
-require_relative "../app/models/askfirst/consent_record"
+require_relative "../app/models/ask_first/consent_record"

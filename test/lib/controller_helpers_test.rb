@@ -1,5 +1,5 @@
 require "test_helper"
-require "askfirst/controller_helpers"
+require "ask_first/controller_helpers"
 
 class AskFirst::ControllerHelpersTest < Minitest::Test
   FakeRequest = Struct.new(:env, :user_agent)
@@ -19,19 +19,19 @@ class AskFirst::ControllerHelpersTest < Minitest::Test
   end
 
   def test_consent_given_returns_true_when_category_accepted
-    controller = build_controller({"askfirst.consent" => { "analytics" => true }})
+    controller = build_controller({"ask_first.consent" => { "analytics" => true }})
 
     assert_equal true, controller.consent_given?(:analytics)
   end
 
   def test_consent_given_returns_false_when_category_rejected
-    controller = build_controller({"askfirst.consent" => { "analytics" => false }})
+    controller = build_controller({"ask_first.consent" => { "analytics" => false }})
 
     assert_equal false, controller.consent_given?(:analytics)
   end
 
   def test_consent_given_returns_false_when_category_missing
-    controller = build_controller({"askfirst.consent" => {}})
+    controller = build_controller({"ask_first.consent" => {}})
 
     assert_equal false, controller.consent_given?(:marketing)
   end
@@ -41,7 +41,7 @@ class AskFirst::ControllerHelpersTest < Minitest::Test
     controller = build_controller
 
     html = controller.cookie_consent_tag
-    assert_includes html, "askfirst--consent"
+    assert_includes html, "ask-first--consent"
     assert_includes html, "data-controller"
     assert html.html_safe?, "cookie_consent_tag output must be html_safe"
   ensure
