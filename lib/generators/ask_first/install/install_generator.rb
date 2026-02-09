@@ -8,7 +8,7 @@ module AskFirst
     source_root File.expand_path("templates", __dir__)
 
     def copy_initializer
-      template "initializer.rb", "config/initializers/askfirst.rb"
+      template "initializer.rb", "config/initializers/ask_first.rb"
     end
 
     def copy_migration
@@ -23,8 +23,8 @@ module AskFirst
 
     def copy_stimulus_controller
       copy_file(
-        File.expand_path("../../../../app/javascript/askfirst/consent_controller.js", __dir__),
-        "app/javascript/controllers/askfirst/consent_controller.js"
+        File.expand_path("../../../../app/javascript/ask_first/consent_controller.js", __dir__),
+        "app/javascript/controllers/ask_first/consent_controller.js"
       )
     end
 
@@ -33,7 +33,7 @@ module AskFirst
       say "AskFirst installed! Next steps:", :green
       say "  1. Run migrations: bin/rails db:migrate"
       say "  2. Mount the engine in config/routes.rb:"
-      say "       mount AskFirst::Engine, at: '/askfirst'"
+      say "       mount AskFirst::Engine, at: '/ask_first'"
       say "  3. Add to your layout:"
       say "       <%= cookie_consent_tag %>"
       say ""

@@ -14,7 +14,7 @@ module AskFirst
 
       consent = raw ? parse_consent(raw) : {}
       consent = apply_gpc(consent) if env["HTTP_SEC_GPC"] == "1"
-      env["askfirst.consent"] = consent
+      env["ask_first.consent"] = consent
 
       @app.call(env)
     end
