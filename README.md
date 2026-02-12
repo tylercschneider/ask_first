@@ -23,7 +23,7 @@ Cookie consent management for Rails. A Rails engine wrapping [vanilla-cookiecons
 Add to your Gemfile:
 
 ```ruby
-gem "askfirst", github: "tylercschneider/askfirst"
+gem "ask_first"
 ```
 
 Run the install generator:
