@@ -4,6 +4,8 @@ require "ask_first/controller_helpers"
 class AskFirst::ControllerHelpersTest < Minitest::Test
   FakeRequest = Struct.new(:env, :user_agent)
 
+  FakeRouteProxy = Struct.new(:consents_path)
+
   class FakeController
     include AskFirst::ControllerHelpers
 
@@ -11,6 +13,11 @@ class AskFirst::ControllerHelpersTest < Minitest::Test
 
     def initialize(request)
       @request = request
+    end
+
+    # Stub for the engine route proxy normally provided by Rails routing
+    def ask_first
+      FakeRouteProxy.new("/ask_first/consents")
     end
   end
 

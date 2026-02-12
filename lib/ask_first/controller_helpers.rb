@@ -15,9 +15,11 @@ module AskFirst
       config = AskFirst.configuration
       config_json = consent_config_json(config)
 
+      endpoint = ask_first.consents_path
+
       (%(<div data-controller="ask-first--consent" ) +
         %(data-ask-first--consent-config-value="#{ERB::Util.html_escape(config_json)}" ) +
-        %(data-ask-first--consent-endpoint-value="/ask_first/consents"></div>)).html_safe
+        %(data-ask-first--consent-endpoint-value="#{ERB::Util.html_escape(endpoint)}"></div>)).html_safe
     end
 
     private

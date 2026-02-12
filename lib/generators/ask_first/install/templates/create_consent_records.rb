@@ -2,7 +2,7 @@ class CreateAskfirstConsentRecords < ActiveRecord::Migration[7.1]
   def change
     create_table :askfirst_consent_records do |t|
       t.string  :visitor_id, null: false
-      t.jsonb   :categories, null: false, default: {}
+      t.json    :categories, null: false, default: {}
       t.string  :policy_version
       t.string  :ip_address
       t.string  :user_agent
