@@ -8,6 +8,11 @@ class AskFirst::InstallGeneratorTest < Rails::Generators::TestCase
 
   setup do
     prepare_destination
+    FileUtils.mkdir_p(File.join(destination_root, "config"))
+    File.write(
+      File.join(destination_root, "config/routes.rb"),
+      "Rails.application.routes.draw do\nend\n"
+    )
   end
 
   def test_creates_initializer
@@ -36,5 +41,11 @@ class AskFirst::InstallGeneratorTest < Rails::Generators::TestCase
       assert_match(/import.*Controller.*from.*@hotwired\/stimulus/, content)
       assert_match(/vanilla-cookieconsent/, content)
     end
+  end
+
+  def test_adds_mount_line_to_routes
+    run_generator
+
+    assert_file "config/routes.rb", /mount AskFirst::Engine, at: "\/consent"/
   end
 end

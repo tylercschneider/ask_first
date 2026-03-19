@@ -7,6 +7,10 @@ module AskFirst
 
     source_root File.expand_path("templates", __dir__)
 
+    def mount_engine
+      route 'mount AskFirst::Engine, at: "/consent"'
+    end
+
     def copy_initializer
       template "initializer.rb", "config/initializers/ask_first.rb"
     end
@@ -32,9 +36,7 @@ module AskFirst
       say ""
       say "AskFirst installed! Next steps:", :green
       say "  1. Run migrations: bin/rails db:migrate"
-      say "  2. Mount the engine in config/routes.rb:"
-      say "       mount AskFirst::Engine, at: '/ask_first'"
-      say "  3. Add to your layout:"
+      say "  2. Add to your layout:"
       say "       <%= cookie_consent_tag %>"
       say ""
     end
